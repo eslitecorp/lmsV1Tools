@@ -139,6 +139,7 @@ func overOneMonth() {
 		fmt.Println(excelRowData)
 
 		tradeSearchQuery := fmt.Sprintf(tradeSearchSqlTemplate, excelRowData.memberCode, excelRowData.tradeNumber)
+		tradeSearchSqlFile.WriteString(tradeSearchQuery + "\n")
 		row := db.QueryRow(tradeSearchQuery)
 		var SL_DATE string
 		var S_NO string
@@ -249,12 +250,6 @@ func thisMonth() {
 		fmt.Println(err)
 		return
 	}
-
-	tradeSearchSqlFile, err := os.Create("tradeSearch.sql")
-	if err != nil {
-		fmt.Println("Error creating file:", err)
-	}
-	defer tradeSearchSqlFile.Close()
 
 	updateSqlFile, err := os.Create("update.sql")
 	if err != nil {
